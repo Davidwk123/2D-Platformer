@@ -59,7 +59,7 @@ void Game::initMark()
 
 void Game::initFont()
 {
-	if (!(endGameFont.loadFromFile("fonts/TimesNewerRoman-Regular.otf")));
+	if (!(endGameFont.loadFromFile("TimesNewerRoman-Regular.otf")));
 	{
 		//error
 	}
@@ -104,7 +104,7 @@ void Game::movement()
 	if (Keyboard::isKeyPressed(Keyboard::Space)) {
 		if (currentVelocity.y == 0 && isJumping == true) {
 
-			speed.y = -15.6f;
+			speed.y = -15.9f;
 
 			currentVelocity.y += speed.y * dt * multiplier;
 		}
