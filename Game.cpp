@@ -104,9 +104,9 @@ void Game::movement()
 	if (Keyboard::isKeyPressed(Keyboard::Space)) {
 		if (currentVelocity.y == 0 && isJumping == true) {
 
-			speed.y = -15.9f;
+			speed.y = -16.3f;
 
-			currentVelocity.y += speed.y * dt * multiplier;
+			currentVelocity.y += speed.y * dt * 1/dt;
 		}
 		else {
 			isJumping = false;
