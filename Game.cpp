@@ -97,16 +97,18 @@ bool Game::running()
 	return window->isOpen();
 }
 
-void Game::movement()
+float Game::deltaTimeFunction(float deltaTime){return deltaTime * multiplier;}
+
+void Game::movement(float deltaTime)
 {
-	dt = clock.restart().asSeconds();
+
 	//jump
 	if (Keyboard::isKeyPressed(Keyboard::Space)) {
 		if (currentVelocity.y == 0 && isJumping == true) {
 
 			speed.y = -16.3f;
 
-			currentVelocity.y += speed.y * dt * 1/dt;
+			currentVelocity.y += speed.y * deltaTimeFunction(deltaTime);
 		}
 		else {
 			isJumping = false;
@@ -118,7 +120,7 @@ void Game::movement()
 		speed.y = 1.2f;
 
 		if (currentVelocity.y < maxVelocityG) {
-			currentVelocity.y += acceleration * speed.y * dt * multiplier;
+			currentVelocity.y += acceleration * speed.y * deltaTimeFunction(deltaTime);
 			
 		}
 	}
@@ -134,39 +136,39 @@ void Game::movement()
 		speed.x = 1.2f;
 		
 		if (currentVelocity.x < maxVelocity) {
-			currentVelocity.x += acceleration * speed.x * dt * multiplier;
+			currentVelocity.x += acceleration * speed.x * deltaTimeFunction(deltaTime);
 			
 		}
 	}
 	
 }
 
-void Game::dragMovement()
+void Game::dragMovement(float deltaTime)
 {
 	// right
 	if (currentVelocity.x > 0.f) {
-		currentVelocity.x -= drag * dt * multiplier;
+		currentVelocity.x -= drag * deltaTimeFunction(deltaTime);
 
 		if (currentVelocity.x < 0.f)
 			currentVelocity.x = 0.f;
 	}
 	// left
 	else if (currentVelocity.x < 0.f) {
-		currentVelocity.x += drag * dt * multiplier;
+		currentVelocity.x += drag * deltaTimeFunction(deltaTime);
 
 		if (currentVelocity.x > 0.f)
 			currentVelocity.x = 0.f;
 	}
 	// down
 	else if (currentVelocity.y >= 0.f) {
-		currentVelocity.y -= drag * dt * multiplier;
+		currentVelocity.y -= drag * deltaTimeFunction(deltaTime);
 
 		if (currentVelocity.y < 0.f)
 			currentVelocity.y = 0.f;
 	}
 	// up
 	else if (currentVelocity.y < 0.f) {
-		currentVelocity.y += drag * dt * multiplier;
+		currentVelocity.y += drag * deltaTimeFunction(deltaTime);
 
 		if (currentVelocity.y > 0.f)
 			currentVelocity.y = 0.f;
@@ -288,10 +290,15 @@ void Game::pollEvents()
 void Game::update()
 {
 	pollEvents();
-	movement();
-	dragMovement();
-	wallCollision();
-	markCollision();
+	dt = clock.restart().asSeconds(); // Get computers's deltatime 
+	while(dt > 0.0f){ // Keeps going until all extra timesteps are done 
+		float deltaTime = min(dt, 1.0f/60.0f); // Get program's desired deltatime
+		dt -= deltaTime; // Desired timesteps computer needs to take to match with the program's dt 
+		
+		movement(deltaTime);
+		dragMovement(deltaTime);
+		wallCollision();
+		markCollision();
 	player.move(currentVelocity * dt * multiplier);
 	screenCollision();
 }

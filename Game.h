@@ -24,6 +24,7 @@ private:
 
 	//objects
 	RectangleShape player;
+	RectangleShape playerOuter;
 	RectangleShape mark;
 	vector<Wall> walls;
 	Font endGameFont;
@@ -38,6 +39,7 @@ private:
 	float acceleration;
 	float drag;
 	bool isJumping;
+	bool isGround;
 	bool endGame;
 
 	//fps and collision variables
@@ -58,8 +60,9 @@ private:
 	void initWindow();
 
 	//movement and coliision functions
-	void movement();
-	void dragMovement();
+	void movement(float deltaTime);
+	float deltaTimeFunction(float del);
+	void dragMovement(float deltaTime);
 	void wallCollision();
 	void markCollision();
 	void screenCollision();
