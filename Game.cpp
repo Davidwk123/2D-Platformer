@@ -10,9 +10,10 @@ void Game::initVariables()
 	maxVelocityG = 10.f;
 	maxVelocity = 5.f;
 	acceleration = .6f;
-	drag = .2f;
+	drag = .3f;
 
 	isJumping = false;
+	isGround = false;
 	endGame = false;
 
 	multiplier = 60.f;
@@ -34,6 +35,9 @@ void Game::initPlayer()
 	player.setFillColor(Color::Green);
 	player.setPosition(660.f,
 		window->getSize().y - player.getGlobalBounds().height);
+
+	playerOuter.setSize(Vector2f(25.f, 50.f));
+	playerOuter.setFillColor(Color::Red);
 }
 
 void Game::initWalls()
@@ -104,14 +108,16 @@ void Game::movement(float deltaTime)
 
 	//jump
 	if (Keyboard::isKeyPressed(Keyboard::Space)) {
-		if (currentVelocity.y == 0 && isJumping == true) {
+		if ((currentVelocity.y == 0 && isJumping == true && player.getPosition().y == groundHeight)
+		|| (currentVelocity.y == 0 && isJumping == true && isGround == true)) {
 
-			speed.y = -16.3f;
+			speed.y = -16.4f;
 
 			currentVelocity.y += speed.y * deltaTimeFunction(deltaTime);
 		}
 		else {
-			isJumping = false;
+			isJumping = false;  
+			isGround = false;
 		}
 	}
 	//gravity
@@ -126,14 +132,14 @@ void Game::movement(float deltaTime)
 	}
 	//left
 	if (Keyboard::isKeyPressed(Keyboard::Left)) {
-		speed.x = -1.2f;
+		speed.x = -1.3f;
 
 		if (currentVelocity.x > -maxVelocity)
-			currentVelocity.x += acceleration * speed.x * dt * multiplier;
+			currentVelocity.x += acceleration * speed.x * deltaTimeFunction(deltaTime);
 	}
 	//right
 	if (Keyboard::isKeyPressed(Keyboard::Right)) {
-		speed.x = 1.2f;
+		speed.x = 1.3f;
 		
 		if (currentVelocity.x < maxVelocity) {
 			currentVelocity.x += acceleration * speed.x * deltaTimeFunction(deltaTime);
@@ -145,6 +151,7 @@ void Game::movement(float deltaTime)
 
 void Game::dragMovement(float deltaTime)
 {
+	
 	// right
 	if (currentVelocity.x > 0.f) {
 		currentVelocity.x -= drag * deltaTimeFunction(deltaTime);
@@ -203,6 +210,7 @@ void Game::wallCollision()
 
 				currentVelocity.y = 0.f;
 				player.setPosition(playerBounds.left, wallBounds.top - playerBounds.height);
+				isGround = true;
 			}
 			//player top
 			if (playerBounds.top > wallBounds.top && playerBounds.left + playerBounds.width > wallBounds.left 
@@ -216,11 +224,11 @@ void Game::wallCollision()
 			}
 
 			//player right
-
-			if (playerBounds.left < wallBounds.left
+			if (playerBounds.left < wallBounds.left && playerBounds.top + playerBounds.height > wallBounds.top
+			&& playerBounds.top < wallBounds.top /*
 				&& playerBounds.left + playerBounds.width < wallBounds.left + wallBounds.width
 				&& playerBounds.top < wallBounds.top + wallBounds.height
-				&& playerBounds.top + playerBounds.height > wallBounds.top) {
+				&& playerBounds.top + playerBounds.height > wallBounds.top*/) {
 
 				currentVelocity.x = 0.f;
 				player.setPosition(wallBounds.left - playerBounds.width, playerBounds.top);
