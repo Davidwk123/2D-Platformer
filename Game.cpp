@@ -182,26 +182,35 @@ void Game::wallCollision()
 
 	nextPos.left += currentVelocity.x;
 	nextPos.top += currentVelocity.y;
+	
+	// playerOuter.setPosition(nextPos.left,
+	// 	nextPos.top);
 
 	for (Wall i : walls) {
 		wallBounds = i.getShape().getGlobalBounds();
+		
 		if (wallBounds.intersects(nextPos)) {
+			
+			//top + height = bottom 
+			//left + width = right
 
 			//player bottom 
-			if (playerBounds.top < wallBounds.top
-				&& playerBounds.top + playerBounds.height < wallBounds.top + wallBounds.height
+			if (playerBounds.top < wallBounds.top && playerBounds.left + playerBounds.width > wallBounds.left 
+			&& playerBounds.left < wallBounds.left + wallBounds.width
+				/*&& playerBounds.top + playerBounds.height < wallBounds.top + wallBounds.height
 				&& playerBounds.left < wallBounds.left + wallBounds.width
-				&& playerBounds.left + playerBounds.width > wallBounds.left) {
+				&& playerBounds.left + playerBounds.width > wallBounds.left*/) {
 
 				currentVelocity.y = 0.f;
 				player.setPosition(playerBounds.left, wallBounds.top - playerBounds.height);
 			}
 			//player top
-			if (playerBounds.top > wallBounds.top
-				&& playerBounds.top + playerBounds.height > wallBounds.top + wallBounds.height
+			if (playerBounds.top > wallBounds.top && playerBounds.left + playerBounds.width > wallBounds.left 
+			&& playerBounds.left < wallBounds.left + wallBounds.width
+				/*&& playerBounds.top + playerBounds.height > wallBounds.top + wallBounds.height
 				&& playerBounds.left < wallBounds.left + wallBounds.width
-				&& playerBounds.left + playerBounds.width > wallBounds.left) {
-
+				&& playerBounds.left + playerBounds.width > wallBounds.left*/) {
+				
 				currentVelocity.y = 0.f;
 				player.setPosition(playerBounds.left, wallBounds.top + wallBounds.height);
 			}
@@ -219,10 +228,11 @@ void Game::wallCollision()
 			}
 
 			//player left
-			if (playerBounds.left > wallBounds.left
+			if (playerBounds.left > wallBounds.left && playerBounds.top + playerBounds.height > wallBounds.top
+			&& playerBounds.top < wallBounds.top/*
 				&& playerBounds.left + playerBounds.width > wallBounds.left + wallBounds.width
 				&& playerBounds.top < wallBounds.top + wallBounds.height
-				&& playerBounds.top + playerBounds.height > wallBounds.top) {
+				&& playerBounds.top + playerBounds.height > wallBounds.top*/) {
 
 				currentVelocity.x = 0.f;
 				player.setPosition(wallBounds.left + wallBounds.width, playerBounds.top);
@@ -299,8 +309,11 @@ void Game::update()
 		dragMovement(deltaTime);
 		wallCollision();
 		markCollision();
-	player.move(currentVelocity * dt * multiplier);
-	screenCollision();
+		player.move(currentVelocity * deltaTimeFunction(deltaTime));
+		screenCollision(); // Causes player to glitch near the edges of the screen if function is put before player.move 
+		
+	}
+	
 }
 
 void Game::render()
@@ -308,7 +321,9 @@ void Game::render()
 	if (endGame == false)
 	{
 		window->clear();
+		//window->draw(playerOuter); For testing players movement 
 		window->draw(player);
+		
 		window->draw(mark);
 		for (Wall i : walls) {
 			window->draw(i.getShape());
