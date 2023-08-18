@@ -1,5 +1,5 @@
 # sfml-mini-platformer-game
-<img src="https://github.com/Davidwk123/sfml-mini-platformer-game/assets/74224822/b813cf36-00d3-4f7d-bada-f0b59b6ffd28" width="600" height="550" alt="Platformer Game">
+<img src="https://github.com/Davidwk123/sfml-mini-platformer-game/assets/74224822/b813cf36-00d3-4f7d-bada-f0b59b6ffd28" alt="Platformer Game">
 
 A mini platformer game using SFML libraries
 
