@@ -1,4 +1,4 @@
-# sfml-mini-platformer-game
+# 2D-Platformer
 <img src="https://github.com/Davidwk123/sfml-mini-platformer-game/assets/74224822/b813cf36-00d3-4f7d-bada-f0b59b6ffd28" alt="Platformer Game">
 
 
