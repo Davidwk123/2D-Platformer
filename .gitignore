@@ -9,7 +9,6 @@
 *.xcworkspace
 *.log
 x64/Debug/2D-Platformer.exe
-x64/Debug/openal32.dll
 x64/Debug/2D-Platformer.pdb
 x64/Release/2D-Platformer.exe
 x64/Release/2D-Platformer.pdb
