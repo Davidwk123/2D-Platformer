@@ -2,8 +2,7 @@
 
 void Game::initVariables()
 {
-	groundHeight = window->getSize().y -
-		player.getGlobalBounds().height;
+	groundHeight = window->getSize().y - player.getGlobalBounds().height;
 
 	currentVelocity.x = 0.f, currentVelocity.y = 0.f;
 	speed.x = 0.f, speed.y = 0.f;
@@ -23,7 +22,7 @@ void Game::initWindow()
 {
 	videoMode.width = 800;
 	videoMode.height = 600;
-	window = new RenderWindow(videoMode, "Platformer", Style::Default);
+	window = new RenderWindow(videoMode, "2D-Platformer", Style::Default);
 
 	window->setFramerateLimit(60);
 	window->setKeyRepeatEnabled(false);
@@ -286,7 +285,7 @@ void Game::screenCollision()
 	}
 }
 
-void Game::pollEvents()
+void Game::checkEvents()
 {
 	while (window->pollEvent(event)) {
 
@@ -304,7 +303,7 @@ void Game::pollEvents()
 
 void Game::update()
 {
-	pollEvents();
+	checkEvents();
 	// Get computers's deltatime 
 	dt = clock.restart().asSeconds(); 
 	// Keeps going until all extra timesteps are done 

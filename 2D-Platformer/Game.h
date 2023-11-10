@@ -1,28 +1,42 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <iostream>
-#include <vector>
+#include "Wall.h"
 #include <SFML\Graphics.hpp>
-#include <SFML\Window.hpp>
-#include <SFML\System.hpp>
-#include <math.h>
-#include <vector>
-#include <cstdlib>
-#include "Wall.cpp"
 
 using namespace std;
 using namespace sf;
 
 class Game
 {
+public:
+	Game();
+
+	virtual ~Game();
+
+	// Returns whether game window is getting dispalyed or not
+	bool running();
+
+	// Check game events like user input or exiting game
+	void checkEvents();
+
+	// Called every frame to update game objects
+	void update();
+
+	// Applies all changes from update() function and displays it to game window 
+	void render();
+
 private:
-	// Window and Events
+	/*
+	* Window and Events
+	*/
 	RenderWindow* window;
 	VideoMode videoMode;
 	Event event;
 
-	// Objects
+	/*
+	* Objects
+	*/
 	RectangleShape player;
 	RectangleShape playerOuter;
 	RectangleShape mark;
@@ -30,7 +44,9 @@ private:
 	Font endGameFont;
 	Text endGameText;
 
-	// Movement variables
+	/*
+	* Movement variables
+	*/
 	float groundHeight;
 	Vector2f currentVelocity;
 	Vector2f speed;
@@ -42,7 +58,9 @@ private:
 	bool isGround;
 	bool endGame;
 
-	// Fps and collision variables
+	/*
+	* Fps and collision variables 
+	*/
 	Clock clock;
 	float dt;
 	float multiplier;
@@ -50,7 +68,9 @@ private:
 	FloatRect wallBounds;
 	FloatRect nextPos;
 
-	// Intialize functions
+	/*
+	* Initialize functions 
+	*/
 	void initVariables();
 	void initPlayer();
 	void initWalls();
@@ -59,25 +79,14 @@ private:
 	void initText();
 	void initWindow();
 
-	// Movement and coliision functions
+	/*
+	* Movement and collision functions 
+	*/
 	void movement(float deltaTime);
 	float deltaTimeFunction(float del);
 	void dragMovement(float deltaTime);
 	void wallCollision();
 	void markCollision();
 	void screenCollision();
-
-public:
-	Game();
-	virtual ~Game();
-
-	bool running();
-
-	void pollEvents();
-	void update();
-	void render();
-
 };
-
-
 #endif
