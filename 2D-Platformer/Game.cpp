@@ -65,7 +65,7 @@ void Game::initFont()
 {
 	if (!(endGameFont.loadFromFile("TimesNewerRoman-Regular.otf")));
 	{
-		//error
+		// Error
 	}
 }
 
@@ -106,7 +106,7 @@ float Game::deltaTimeFunction(float deltaTime){return deltaTime * multiplier;}
 void Game::movement(float deltaTime)
 {
 
-	//jump
+	// Jump
 	if (Keyboard::isKeyPressed(Keyboard::Space)) {
 		if ((currentVelocity.y == 0 && isJumping == true && player.getPosition().y == groundHeight)
 		|| (currentVelocity.y == 0 && isJumping == true && isGround == true)) {
@@ -120,7 +120,7 @@ void Game::movement(float deltaTime)
 			isGround = false;
 		}
 	}
-	//gravity
+	// Gravity
 	if (player.getPosition().y < groundHeight) {
 
 		speed.y = 1.2f;
@@ -130,14 +130,12 @@ void Game::movement(float deltaTime)
 			
 		}
 	}
-	//left
 	if (Keyboard::isKeyPressed(Keyboard::Left)) {
 		speed.x = -1.3f;
 
 		if (currentVelocity.x > -maxVelocity)
 			currentVelocity.x += acceleration * speed.x * deltaTimeFunction(deltaTime);
 	}
-	//right
 	if (Keyboard::isKeyPressed(Keyboard::Right)) {
 		speed.x = 1.3f;
 		
@@ -151,29 +149,28 @@ void Game::movement(float deltaTime)
 
 void Game::dragMovement(float deltaTime)
 {
-	
-	// right
+	// Right
 	if (currentVelocity.x > 0.f) {
 		currentVelocity.x -= drag * deltaTimeFunction(deltaTime);
 
 		if (currentVelocity.x < 0.f)
 			currentVelocity.x = 0.f;
 	}
-	// left
+	// Left
 	else if (currentVelocity.x < 0.f) {
 		currentVelocity.x += drag * deltaTimeFunction(deltaTime);
 
 		if (currentVelocity.x > 0.f)
 			currentVelocity.x = 0.f;
 	}
-	// down
+	// Down
 	else if (currentVelocity.y >= 0.f) {
 		currentVelocity.y -= drag * deltaTimeFunction(deltaTime);
 
 		if (currentVelocity.y < 0.f)
 			currentVelocity.y = 0.f;
 	}
-	// up
+	// Up
 	else if (currentVelocity.y < 0.f) {
 		currentVelocity.y += drag * deltaTimeFunction(deltaTime);
 
@@ -198,10 +195,10 @@ void Game::wallCollision()
 		
 		if (wallBounds.intersects(nextPos)) {
 			
-			//top + height = bottom 
-			//left + width = right
+			// Top + height = bottom 
+			// Left + width = right
 
-			//player bottom 
+			// Player bottom 
 			if (playerBounds.top < wallBounds.top && playerBounds.left + playerBounds.width > wallBounds.left 
 			&& playerBounds.left < wallBounds.left + wallBounds.width
 				/*&& playerBounds.top + playerBounds.height < wallBounds.top + wallBounds.height
@@ -212,7 +209,7 @@ void Game::wallCollision()
 				player.setPosition(playerBounds.left, wallBounds.top - playerBounds.height);
 				isGround = true;
 			}
-			//player top
+			// Player top
 			if (playerBounds.top > wallBounds.top && playerBounds.left + playerBounds.width > wallBounds.left 
 			&& playerBounds.left < wallBounds.left + wallBounds.width
 				/*&& playerBounds.top + playerBounds.height > wallBounds.top + wallBounds.height
@@ -223,7 +220,7 @@ void Game::wallCollision()
 				player.setPosition(playerBounds.left, wallBounds.top + wallBounds.height);
 			}
 
-			//player right
+			// Player right
 			if (playerBounds.left < wallBounds.left && playerBounds.top + playerBounds.height > wallBounds.top
 			&& playerBounds.top < wallBounds.top /*
 				&& playerBounds.left + playerBounds.width < wallBounds.left + wallBounds.width
@@ -235,7 +232,7 @@ void Game::wallCollision()
 
 			}
 
-			//player left
+			// Player left
 			if (playerBounds.left > wallBounds.left && playerBounds.top + playerBounds.height > wallBounds.top
 			&& playerBounds.top < wallBounds.top/*
 				&& playerBounds.left + playerBounds.width > wallBounds.left + wallBounds.width
@@ -265,22 +262,22 @@ void Game::markCollision()
 
 void Game::screenCollision()
 {
-	// left
+	// Left
 	if (player.getPosition().x <= 0) {
 		player.setPosition(0, player.getPosition().y);
 	}
-	// right
+	// Right
 	if (player.getPosition().x >= window->getSize().x
 		- player.getGlobalBounds().width)
 		player.setPosition(window->getSize().x -
 			player.getGlobalBounds().width,
 			player.getPosition().y);
-	// top
+	// Top
 	if (player.getPosition().y <= 0) {
 		player.setPosition(player.getPosition().x, 0);
 		currentVelocity.y = 0.f;
 	}
-	// bottom
+	// Bottom
 	if (player.getPosition().y > groundHeight) {
 		player.setPosition(player.getPosition().x,
 			groundHeight);
@@ -293,13 +290,13 @@ void Game::pollEvents()
 {
 	while (window->pollEvent(event)) {
 
-		//exiting program
+		// Exiting program
 		if (event.type == Event::Closed)
 			window->close();
-		//retry program
+		// Retry program
 		if (event.type == Event::KeyPressed && event.key.code == Keyboard::R)
 			endGame = false;
-		//jump spam counter
+		// Jump spam counter
 		if (event.type == Event::KeyPressed && event.key.code == Keyboard::Space)
 			isJumping = true;
 	}
@@ -308,17 +305,22 @@ void Game::pollEvents()
 void Game::update()
 {
 	pollEvents();
-	dt = clock.restart().asSeconds(); // Get computers's deltatime 
-	while(dt > 0.0f){ // Keeps going until all extra timesteps are done 
-		float deltaTime = min(dt, 1.0f/60.0f); // Get program's desired deltatime
-		dt -= deltaTime; // Desired timesteps computer needs to take to match with the program's dt 
+	// Get computers's deltatime 
+	dt = clock.restart().asSeconds(); 
+	// Keeps going until all extra timesteps are done 
+	while(dt > 0.0f){ 
+		// Get program's desired deltatime
+		float deltaTime = min(dt, 1.0f/60.0f); 
+		// Desired timesteps computer needs to take to match with the program's dt 
+		dt -= deltaTime; 
 		
 		movement(deltaTime);
 		dragMovement(deltaTime);
 		wallCollision();
 		markCollision();
 		player.move(currentVelocity * deltaTimeFunction(deltaTime));
-		screenCollision(); // Causes player to glitch near the edges of the screen if function is put before player.move 
+		// Causes player to glitch near the edges of the screen if function is put before player.move 
+		screenCollision(); 
 		
 	}
 	

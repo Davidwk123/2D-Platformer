@@ -30,7 +30,7 @@ private:
 	Font endGameFont;
 	Text endGameText;
 
-	//movement variables
+	// Movement variables
 	float groundHeight;
 	Vector2f currentVelocity;
 	Vector2f speed;
@@ -42,7 +42,7 @@ private:
 	bool isGround;
 	bool endGame;
 
-	//fps and collision variables
+	// Fps and collision variables
 	Clock clock;
 	float dt;
 	float multiplier;
@@ -50,7 +50,7 @@ private:
 	FloatRect wallBounds;
 	FloatRect nextPos;
 
-	//intialize functions
+	// Intialize functions
 	void initVariables();
 	void initPlayer();
 	void initWalls();
@@ -59,7 +59,7 @@ private:
 	void initText();
 	void initWindow();
 
-	//movement and coliision functions
+	// Movement and coliision functions
 	void movement(float deltaTime);
 	float deltaTimeFunction(float del);
 	void dragMovement(float deltaTime);

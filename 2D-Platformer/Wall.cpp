@@ -29,7 +29,7 @@ class Wall
 
 		Wall(float width1, float height1, float x1, float y1)
 		{
-			//error checking
+			// Error checking
 			width = width1;
 			height = height1;
 			x = x1;

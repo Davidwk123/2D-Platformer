@@ -7,9 +7,9 @@ int main()
 
 	while (game.running()) {
 
-		//update
+		// Update
 		game.update();
-		//draw
+		// Draw
 		game.render();
 	}
 	return 0;
