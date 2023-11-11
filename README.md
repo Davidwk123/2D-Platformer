@@ -1,5 +1,5 @@
 # 2D-Platformer
-<img src="https://github.com/Davidwk123/2D-Platformer/assets/74224822/138c27cc-7ade-4456-9d47-fd606186afa0" alt="Platformer Game">
+<img src="https://github.com/Davidwk123/2D-Platformer/assets/74224822/927454e5-291b-4289-835b-3fbb8b83e6c5" alt="Platformer Game">
 
 A 2D platformer game developed using SFML libraries
 
