@@ -31,7 +31,7 @@ void Game::initWindow()
 {
 	videoMode.width = WINDOW_WIDTH;
 	videoMode.height = WINDOW_HEIGHT;
-	window = new RenderWindow(videoMode, GAME_TITLE, Style::Default);
+	window = new RenderWindow(videoMode, GAME_TITLE, Style::Titlebar | Style::Close);
 
 	window->setFramerateLimit(FPS);
 	window->setKeyRepeatEnabled(false);
@@ -50,16 +50,19 @@ void Game::initPlayer()
 
 void Game::initWalls()
 {
-	Wall wall1(50.f, 10.f, 100.f, WINDOW_HEIGHT - 85.f);
+	Wall wall1(50.f, 10.f, 0.f, WINDOW_HEIGHT - 150.f);
 	walls.push_back(wall1);
-	Wall wall2(50.f, 10.f, 300.f, WINDOW_HEIGHT - 250.f);
+	Wall wall2(50.f, 10.f, 100.f, WINDOW_HEIGHT - 300.f);
 	walls.push_back(wall2);
-	Wall wall3(50.f, 10.f, 50.f, WINDOW_HEIGHT - 360.f);
+	Wall wall3(50.f, 10.f, 150.f, WINDOW_HEIGHT - 450.f);
 	walls.push_back(wall3);
-	Wall wall4(200.f, 10.f, 315.f, WINDOW_HEIGHT - 430.f);
+	Wall wall4(50.f, 10.f, 300.f, WINDOW_HEIGHT - 300.f);
 	walls.push_back(wall4);
-	Wall wall5(50.f, 10.f, 650.f, WINDOW_HEIGHT - 480.f);
+	Wall wall5(50.f, 10.f, 550.f, WINDOW_HEIGHT - 300.f);
 	walls.push_back(wall5);
+	Wall wall6(50.f, 10.f, 800.f, WINDOW_HEIGHT - 375.f);
+	walls.push_back(wall6);
+	
 }
 
 void Game::initMark()
@@ -301,7 +304,6 @@ void Game::update()
 		// Causes player to glitch near the edges of the screen if function is put before player.move 
 		screenCollision(); 
 	}
-	
 }
 
 void Game::render()

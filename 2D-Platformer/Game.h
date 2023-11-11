@@ -91,13 +91,13 @@ private:
 	* Constants
 	*/
 	string GAME_TITLE = "2D-Platformer";
-	int WINDOW_WIDTH = 800;
-	int WINDOW_HEIGHT = 600;
+	int WINDOW_WIDTH = 1024;
+	int WINDOW_HEIGHT = 576;
 
 	int FPS = 30;
 	float MULTIPLIER = 60.f;
 
-	float PLAYER_START_X = 660.f;
+	float PLAYER_START_X = WINDOW_WIDTH/2;
 	float PLAYER_START_Y = WINDOW_HEIGHT - PLAYER_HEIGHT;
 	float PLAYER_WIDTH = 25.f;
 	float PLAYER_HEIGHT = 50.f;
