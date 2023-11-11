@@ -55,7 +55,7 @@ private:
 	Vector2f speed;
 	bool isJumping;
 	bool isGrounded;
-	bool endGame;
+	bool didGameEnd;
 
 	/*
 	* Fps and collision variables 

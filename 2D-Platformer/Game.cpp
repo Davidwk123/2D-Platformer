@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <algorithm>
+#include <iostream>
 
 Game::Game()
 {
@@ -24,7 +25,7 @@ void Game::initVariables()
 
 	isJumping = false;
 	isGrounded = false;
-	endGame = false;
+	didGameEnd = false;
 }
 
 void Game::initWindow()
@@ -60,7 +61,7 @@ void Game::initWalls()
 	walls.push_back(wall4);
 	Wall wall5(50.f, 10.f, 550.f, WINDOW_HEIGHT - 300.f);
 	walls.push_back(wall5);
-	Wall wall6(50.f, 10.f, 800.f, WINDOW_HEIGHT - 375.f);
+	Wall wall6(50.f, 10.f, 800.f, WINDOW_HEIGHT - 325.f);
 	walls.push_back(wall6);
 	
 }
@@ -84,9 +85,10 @@ void Game::initText()
 {
 	initFont();
 	endGameText.setFont(endGameFont);
-	endGameText.setString("Game Over!\n Press r to restart.");
-	endGameText.setPosition((WINDOW_WIDTH / 2.f) - endGameText.getGlobalBounds().width / 2.f, WINDOW_HEIGHT / 2.f);
-	endGameText.setCharacterSize(24);
+	endGameText.setString("\tGame Over!\nPress 'r' to restart...");
+	endGameText.setPosition((WINDOW_WIDTH / 2.f) - (endGameText.getGlobalBounds().width / 2.f),
+		(WINDOW_HEIGHT / 2.f) - (endGameText.getGlobalBounds().height / 2.f));
+	endGameText.setCharacterSize(40);
 	endGameText.setFillColor(sf::Color::Red);
 	endGameText.setStyle(sf::Text::Bold);
 }
@@ -234,11 +236,10 @@ void Game::markCollision()
 {
 	if (playerBounds.intersects(mark.getGlobalBounds()))
 	{
-		endGame = true;
+		didGameEnd = true;
 		currentVelocity.x = 0.f;
 		currentVelocity.y = 0.f;
-		player.setPosition(660.f,
-			window->getSize().y - player.getGlobalBounds().height);
+		player.setPosition(PLAYER_START_X, PLAYER_START_Y);
 	}
 }
 
@@ -277,7 +278,7 @@ void Game::checkEvents()
 			window->close();
 		// Retry program
 		if (event.type == Event::KeyPressed && event.key.code == Keyboard::R)
-			endGame = false;
+			didGameEnd = false;
 		// Jump spam counter
 		if (event.type == Event::KeyPressed && event.key.code == Keyboard::Space)
 			isJumping = true;
@@ -287,28 +288,34 @@ void Game::checkEvents()
 void Game::update()
 {
 	checkEvents();
+
 	// Get computers's deltatime 
-	dt = clock.restart().asSeconds(); 
-	// Keeps going until all extra timesteps are done 
-	while(dt > 0.0f){ 
-		// Get program's desired deltatime
-		float deltaTime = min(dt, 1.0f/MULTIPLIER); 
-		// Desired timesteps computer needs to take to match with the program's dt 
-		dt -= deltaTime; 
-		
-		movement(deltaTime);
-		dragMovement(deltaTime);
-		wallCollision();
-		markCollision();
-		player.move(currentVelocity * deltaTimeFunction(deltaTime));
-		// Causes player to glitch near the edges of the screen if function is put before player.move 
-		screenCollision(); 
+	dt = clock.restart().asSeconds();
+
+	// Check if user made it to the end of the level
+	if (didGameEnd == false)
+	{
+		// Keeps going until all extra timesteps are done 
+		while (dt > 0.0f) {
+			// Get program's desired deltatime
+			float deltaTime = min(dt, 1.0f / MULTIPLIER);
+			// Desired timesteps computer needs to take to match with the program's dt 
+			dt -= deltaTime;
+			movement(deltaTime);
+			dragMovement(deltaTime);
+			wallCollision();
+			markCollision();
+			player.move(currentVelocity * deltaTimeFunction(deltaTime));
+			// Causes player to glitch near the edges of the screen if function is put before player.move 
+			screenCollision();
+		}
 	}
+		
 }
 
 void Game::render()
 {
-	if (endGame == false)
+	if (didGameEnd == false)
 	{
 		window->clear();
 		// Debug
