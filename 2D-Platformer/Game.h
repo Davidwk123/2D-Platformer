@@ -3,6 +3,8 @@
 
 #include "Wall.h"
 #include <SFML\Graphics.hpp>
+#include <vector>
+#include <string>
 
 using namespace std;
 using namespace sf;
@@ -38,7 +40,9 @@ private:
 	* Objects
 	*/
 	RectangleShape player;
+	// Used for collision detection debugging
 	RectangleShape playerOuter;
+	// End goal for player 
 	RectangleShape mark;
 	vector<Wall> walls;
 	Font endGameFont;
@@ -47,15 +51,10 @@ private:
 	/*
 	* Movement variables
 	*/
-	float groundHeight;
 	Vector2f currentVelocity;
 	Vector2f speed;
-	float maxVelocityG;
-	float maxVelocity;
-	float acceleration;
-	float drag;
 	bool isJumping;
-	bool isGround;
+	bool isGrounded;
 	bool endGame;
 
 	/*
@@ -63,7 +62,6 @@ private:
 	*/
 	Clock clock;
 	float dt;
-	float multiplier;
 	FloatRect playerBounds;
 	FloatRect wallBounds;
 	FloatRect nextPos;
@@ -88,5 +86,37 @@ private:
 	void wallCollision();
 	void markCollision();
 	void screenCollision();
+
+	/*
+	* Constants
+	*/
+	string GAME_TITLE = "2D-Platformer";
+	int WINDOW_WIDTH = 800;
+	int WINDOW_HEIGHT = 600;
+
+	int FPS = 30;
+	float MULTIPLIER = 60.f;
+
+	float PLAYER_START_X = 660.f;
+	float PLAYER_START_Y = WINDOW_HEIGHT - PLAYER_HEIGHT;
+	float PLAYER_WIDTH = 25.f;
+	float PLAYER_HEIGHT = 50.f;
+	Color PLAYER_COLOR = Color::Green;
+
+	float MARK_START_X = WINDOW_WIDTH - 50.f;
+	float MARK_START_Y = 25.f;
+	float MARK_WIDTH = 15.f;
+	float MARK_HEIGHT = 15.f;
+	Color MARK_COLOR = Color::Red;
+
+	float GROUND_HEIGHT = WINDOW_HEIGHT - PLAYER_HEIGHT;
+	float MAX_VELOCITY_GRAVITY = 10.f;
+	float MAX_VELOCITY_MOVEMENT = 5.f;
+	float ACCELERATION = .6f;
+	float DRAG = .3f;
+
+	string FONT_FILE = "TimesNewerRoman-Regular.otf";
+
+
 };
 #endif
