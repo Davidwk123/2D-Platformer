@@ -1,6 +1,5 @@
 #include "Game.h"
 #include <algorithm>
-#include <iostream>
 
 Game::Game()
 {
@@ -310,7 +309,6 @@ void Game::update()
 			screenCollision();
 		}
 	}
-		
 }
 
 void Game::render()
