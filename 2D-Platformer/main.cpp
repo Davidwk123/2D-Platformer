@@ -5,7 +5,6 @@ int main()
 	Game game;
 
 	while (game.running()) {
-
 		// Update
 		game.update();
 		// Draw
