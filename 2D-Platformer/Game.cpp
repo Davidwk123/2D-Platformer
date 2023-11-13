@@ -249,11 +249,9 @@ void Game::screenCollision()
 		player.setPosition(0, player.getPosition().y);
 	}
 	// Right
-	if (player.getPosition().x >= WINDOW_WIDTH
-		- PLAYER_WIDTH)
-		player.setPosition(WINDOW_WIDTH -
-			PLAYER_WIDTH,
-			player.getPosition().y);
+	if (player.getPosition().x >= WINDOW_WIDTH - PLAYER_WIDTH) {
+		player.setPosition(WINDOW_WIDTH - PLAYER_WIDTH, player.getPosition().y);
+	}
 	// Top
 	if (player.getPosition().y <= 0) {
 		player.setPosition(player.getPosition().x, 0);
@@ -261,8 +259,7 @@ void Game::screenCollision()
 	}
 	// Bottom
 	if (player.getPosition().y > GROUND_HEIGHT) {
-		player.setPosition(player.getPosition().x,
-			GROUND_HEIGHT);
+		player.setPosition(player.getPosition().x, GROUND_HEIGHT);
 		// Allows constant jump height
 		currentVelocity.y = 0.f;
 	}
@@ -273,14 +270,19 @@ void Game::checkEvents()
 	while (window->pollEvent(event)) {
 
 		// Exiting program
-		if (event.type == Event::Closed)
+		if (event.type == Event::Closed) {
 			window->close();
+		}
 		// Retry program
-		if (event.type == Event::KeyPressed && event.key.code == Keyboard::R)
+		if (event.type == Event::KeyPressed && event.key.code == Keyboard::R){
 			didGameEnd = false;
+
+		}
 		// Jump spam counter
-		if (event.type == Event::KeyPressed && event.key.code == Keyboard::Space)
+		if (event.type == Event::KeyPressed && event.key.code == Keyboard::Space){
 			isJumping = true;
+
+		}
 	}
 }
 
