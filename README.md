@@ -4,3 +4,5 @@
 A 2D platformer game developed using SFML libraries
 
 Press "Space" to jump and use arrow keys to move left and right. Goal is to get to the red mark at the top right of the screen.
+
+Download on itch.io to play: https://davidwk1738.itch.io/2d-platformer
